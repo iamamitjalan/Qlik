@@ -1,0 +1,92 @@
+// ----------------------------------------------------------
+//	Extracts data about Profit Center Master 
+//	Developed By	:	Prakrati Bhatnagar
+//	Last Updated on	:	19 Jan,2017
+//	Versions		:
+// ----------------------------------------------------------
+
+LIB CONNECT TO 'SHS_IN_MIS_Extractor Dev:Office_365_Sharepoint_Metadata - coeapcdeveloper3.func@siemens-healthineers.com';
+
+LOAD UniqueId as [ListFiles.UniqueId], 
+	Name as [ListFiles.Name];
+
+SELECT UniqueId,
+	Name
+FROM ListFiles
+WITH PROPERTIES (
+subSite='sites/QlikManualIND',
+folder ='$(vPC_ListPath)',
+maxResults=''
+);
+
+if $(vPC_List) > 0 then
+
+	SET CurrTable = Master_PC_List;	
+	// remember starting time for statistics
+	LET Start = now();
+	
+    
+FOR EACH vUniqueId in FieldValuelist('ListFiles.Name')   
+    
+ trace $(vUniqueId);
+
+  SET vTemp = left('$(vUniqueId)',8);
+  if($(vTemp) = 'PC List_') then 
+    
+    
+
+'$(CurrTable)':
+
+LOAD *,
+(num#('20' & right(SubField(FILE_NAME,'.',1),2))) as Year;
+
+LOAD [Controlling
+ Area SHPL], 
+     [Cost Ctr SHPL],  
+     if(
+     	Left(trim([Profit Ctr SHPL]),2)='P6',
+     		Replace(trim([Profit Ctr SHPL]),'P6','PB'),
+     			trim([Profit Ctr SHPL])
+	     ) as [Profit Ctr SHPL],
+     Group, 
+     [Group Main], 
+     Region, 
+     Branch, 
+     [Business Line (SPIRIDON)], 
+     [Business Area
+(Spiridon)], 
+     [Business Line (Esprit)], 
+     [Business Area 
+(Esprit)], 
+     [Sp Group], 
+     [Profit Ctr Name], 
+     Description, 
+     [Person responsible], 
+     Department, 
+     [Profit Ctr Group SHPL], 
+     [Cost Ctr
+Group SHPL], 
+     [Cost Center Category SHPL], 
+     [YH050 SHPL], 
+     [YH050 Desc], 
+     [Lock Status in SHPL], 
+     [New Strcture], 
+     [New Structure],
+     [Department Coverage],
+    '$(vUniqueId)' as FILE_NAME,
+     now() as DataLoadDateEmp
+FROM [$(FolderStage)$(vPC_ListSubPath)$(vUniqueId)]
+(ooxml, embedded labels, table is Sheet1);
+
+Trace $(vUniqueId) is loaded into the Qlik table;
+End if;
+NEXT
+	
+	// Subroutine for storing data in QVDs
+CALL Storage_Drop($(vPC_List));
+Drop Fields [ListFiles.UniqueId],[ListFiles.Name];
+End if;
+
+
+
+
