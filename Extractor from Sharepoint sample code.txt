@@ -48,31 +48,6 @@ LOAD [Controlling
      		Replace(trim([Profit Ctr SHPL]),'P6','PB'),
      			trim([Profit Ctr SHPL])
 	     ) as [Profit Ctr SHPL],
-     Group, 
-     [Group Main], 
-     Region, 
-     Branch, 
-     [Business Line (SPIRIDON)], 
-     [Business Area
-(Spiridon)], 
-     [Business Line (Esprit)], 
-     [Business Area 
-(Esprit)], 
-     [Sp Group], 
-     [Profit Ctr Name], 
-     Description, 
-     [Person responsible], 
-     Department, 
-     [Profit Ctr Group SHPL], 
-     [Cost Ctr
-Group SHPL], 
-     [Cost Center Category SHPL], 
-     [YH050 SHPL], 
-     [YH050 Desc], 
-     [Lock Status in SHPL], 
-     [New Strcture], 
-     [New Structure],
-     [Department Coverage],
     '$(vUniqueId)' as FILE_NAME,
      now() as DataLoadDateEmp
 FROM [$(FolderStage)$(vPC_ListSubPath)$(vUniqueId)]
