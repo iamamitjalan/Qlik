@@ -1,8 +1,8 @@
 // ----------------------------------------------------------
 //	Extracts data about Profit Center Master 
-//	Developed By	:	Prakrati Bhatnagar
-//	Last Updated on	:	19 Jan,2017
-//	Versions		:
+//	Developed By	:	
+//	Last Updated on	:
+//	Versions	:
 // ----------------------------------------------------------
 
 LIB CONNECT TO 'SHS_IN_MIS_Extractor Dev:Office_365_Sharepoint_Metadata - coeapcdeveloper3.func@siemens-healthineers.com';
