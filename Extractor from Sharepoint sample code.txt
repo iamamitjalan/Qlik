@@ -5,7 +5,7 @@
 //	Versions	:
 // ----------------------------------------------------------
 
-LIB CONNECT TO 'SHS_IN_MIS_Extractor Dev:Office_365_Sharepoint_Metadata - coeapcdeveloper3.func@siemens-healthineers.com';
+LIB CONNECT TO 'IN_MIS_Extractor Dev:Office_365_Sharepoint_Metadata - coeapcdeveloper3.func@personal.com';
 
 LOAD UniqueId as [ListFiles.UniqueId], 
 	Name as [ListFiles.Name];
